@@ -3,12 +3,13 @@ name: check protected deployment
 on:
   pull_request:
 
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
 jobs:
   tests:
-    permissions:
-      contents: read
-      pages: write
-      id-token: write
     runs-on: ubuntu-latest
     if: ${{ github.repository == 'jngrad/pyMBE' }}
     steps:
