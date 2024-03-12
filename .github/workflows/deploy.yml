@@ -1,7 +1,6 @@
 name: check protected deployment
 
 on:
-  push:
   pull_request:
 
 jobs:
@@ -10,14 +9,12 @@ jobs:
       contents: read
       pages: write
       id-token: write
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
+    if: ${{ github.repository == 'jngrad/pyMBE' }}
     steps:
       - name: Run docs
         run: |
-          echo -e '<!DOCTYPE html>\n<html><head>\n<meta http-equiv="Content-type" content="text/html; charset=utf-8">\n</head>\n<body>test2\n</body>\n</html>' > index.html
+          echo -e '<!DOCTYPE html>\n<html><head>\n<meta http-equiv="Content-type" content="text/html; charset=utf-8">\n</head>\n<body>test4\n</body>\n</html>' > index.html
         shell: bash
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
