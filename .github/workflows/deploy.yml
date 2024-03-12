@@ -1,0 +1,25 @@
+name: check protected deployment
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  tests:
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run docs
+        run: |
+          echo -e '<!DOCTYPE html>\n<html><head>\n<meta http-equiv="Content-type" content="text/html; charset=utf-8">\n</head>\n<body>test2\n</body>\n</html>' > index.html
+        shell: bash
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: .
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
