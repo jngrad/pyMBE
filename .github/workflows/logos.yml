@@ -22,11 +22,12 @@ jobs:
           make all
           mkdir -p github_artifacts
           mv $(make list) ./github_artifacts/
+          echo -e "# pyMBE logos\n\nThese are the official pyMBE logos.\n\nDo not edit these files directly: they are automatically regenerated after each push to branch `corporate-design`." > ./github_artifacts/Readme.md
         shell: bash
       - name: Upload logos as artifact
         uses: actions/upload-artifact@v4
         with:
-          name: logo files
+          name: logo_files
           path: ./github_artifacts/*
   deploy:
     needs: [build]
@@ -42,10 +43,10 @@ jobs:
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: "./github_artifacts/logo files"
+          publish_dir: ./github_artifacts/logo_files
           commit_message: "Generated logos"
           user_name: "github-actions[bot]"
           user_email: "41898282+github-actions[bot]@users.noreply.github.com"
           enable_jekyll: true
-          publish_branch: test
+          publish_branch: logos
           force_orphan: true
