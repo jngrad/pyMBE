@@ -14,7 +14,7 @@ jobs:
       - name: Create logos
         run: |
           mkdir -p github_artifacts/logo_files
-          echo -e "# pyMBE logos\n\nThese are the official pyMBE logos.\n\nDo not edit these files directly: they are automatically regenerated after each push to branch `corporate-design`." > ./github_artifacts/logo_files/Readme.md
+          echo -e "# pyMBE logos\n\nThese are the official pyMBE logos.\n\nDo not edit these files directly: they are automatically regenerated after each push to branch \`corporate-design\`." > ./github_artifacts/logo_files/Readme.md
       - uses: actions/download-artifact@v4
         with:
           path: github_artifacts
