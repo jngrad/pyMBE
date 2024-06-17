@@ -40,14 +40,17 @@ jobs:
       - uses: actions/download-artifact@v4
         with:
           path: github_artifacts
+      - name: Create logos
+        run: |
+          ls *
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./github_artifacts
+          publish_dir: ./logo_files
           commit_message: "Generated logos"
           user_name: "github-actions[bot]"
           user_email: "41898282+github-actions[bot]@users.noreply.github.com"
-          enable_jekyll: false
+          enable_jekyll: true
           publish_branch: test
           force_orphan: true
