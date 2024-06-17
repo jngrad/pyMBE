@@ -16,7 +16,7 @@ jobs:
       - name: Install dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y --no-install-recommends inkscape fonts-dejavu make sed gpg-agent
+          sudo apt-get install -y --no-install-recommends inkscape fonts-dejavu make sed
       - name: Create logos
         run: |
           make all
@@ -26,8 +26,8 @@ jobs:
       - name: Upload logos as artifact
         uses: actions/upload-artifact@v4
         with:
-          name: Logo files
-          path: ./github_artifacts
+          name: logo files
+          path: ./github_artifacts/*
   deploy:
     needs: [build]
     permissions:
@@ -45,7 +45,9 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./github_artifacts
+          commit_message: "Generated logos"
           user_name: "github-actions[bot]"
           user_email: "41898282+github-actions[bot]@users.noreply.github.com"
+          enable_jekyll: false
           publish_branch: test
           force_orphan: true
