@@ -15,6 +15,7 @@ authors:
   - given-names: Sebastian P.
     family-names: Pineda
     affiliation: Department of Physical and Macromolecular Chemistry, Charles University, Prague, Czech Republic
+    orcid: 'https://orcid.org/0000-0001-8270-2476'
   - given-names: Claudio F.
     family-names: Narambuena
     affiliation: Grupo de Bionanotecnologia y Sistemas Complejos. Infap-CONICET & Facultad Regional San Rafael, Universidad Tecnológica Nacional, San Rafael, Argentina
@@ -34,7 +35,7 @@ authors:
 identifiers:
   - type: doi
     value: 10.48550/arXiv.2401.14954
-    description: The ArXiv preprint of the paper
+    description: The ArXiv preprint
 repository-code: 'https://github.com/pyMBE-dev/pyMBE'
 keywords:
   - molecule builder
@@ -46,6 +47,28 @@ keywords:
   - protein
   - peptide
 license: GPL-3.0-or-later
+preferred-citation:
+  authors:
+    - given-names: David
+      family-names: Beyer
+    - given-names: Paola B.
+      family-names: Torres
+    - given-names: Sebastian P.
+      family-names: Pineda
+    - given-names: Claudio F.
+      family-names: Narambuena
+    - given-names: Jean-Noël
+      family-names: Grad
+    - given-names: Peter
+      family-names: Košovan
+    - given-names: Pablo M.
+      family-names: Blanco
+  doi: 10.48550/arXiv.2401.14954
+  status: preprint
+  type: generic
+  journal: ArXiv
+  title: "pyMBE: the Python-based Molecule Builder for ESPResSo"
+  year: 2024
 references:
   - authors:
       - given-names: David
