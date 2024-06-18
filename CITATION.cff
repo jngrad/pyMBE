@@ -65,7 +65,7 @@ preferred-citation:
       family-names: Blanco
   doi: 10.48550/arXiv.2401.14954
   status: preprint
-  type: paper
+  type: article
   journal: "arXiv preprint arXiv:2401.14954"
   title: "pyMBE: the Python-based Molecule Builder for ESPResSo"
   year: 2024
@@ -87,7 +87,7 @@ references:
         family-names: Blanco
     doi: 10.48550/arXiv.2401.14954
     status: preprint
-    type: paper
+    type: article
     journal: "arXiv preprint arXiv:2401.14954"
     title: "pyMBE: the Python-based Molecule Builder for ESPResSo"
     year: 2024
