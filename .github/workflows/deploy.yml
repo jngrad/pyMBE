@@ -10,7 +10,6 @@ on:
 
 jobs:
   deploy-documentation:
-    if: ${{ github.event.workflow_run.conclusion == 'success' && github.repository == 'pyMBE-dev/pyMBE' }}
 
     # Grant GITHUB_TOKEN the permissions required to make a Pages deployment
     permissions:
