@@ -4,7 +4,7 @@ on:
   # trigger workflow when the main branch completed the testsuite
   workflow_run:
     workflows: [ "testsuite" ]
-    branches: [ "main" ]
+    branches: [ "packaging" ]
     types:
       - completed
 
