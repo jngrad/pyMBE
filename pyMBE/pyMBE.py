@@ -23,7 +23,6 @@ import numpy as np
 import pandas as pd
 import scipy.constants
 import scipy.optimize
-from .lib.lattice import LatticeBuilder, DiamondLattice
 import logging
 import importlib.resources
 
@@ -2477,6 +2476,7 @@ class pymbe_library():
         Args:
             diamond_lattice(`DiamondLattice`): DiamondLattice object from the `lib/lattice` module to be used in the LatticeBuilder.
         """
+        from .lib.lattice import LatticeBuilder, DiamondLattice
         if not isinstance(diamond_lattice, DiamondLattice):
             raise TypeError("Currently only DiamondLattice objects are supported.")
         self.lattice_builder = LatticeBuilder(lattice=diamond_lattice)

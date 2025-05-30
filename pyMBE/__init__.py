@@ -17,4 +17,24 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-from .pyMBE import *
+"""
+.. include:: ../README.md
+   :start-after: [comment]: # (introduction start)
+   :end-before: [comment]: # (introduction stop)
+   :parser: markdown
+
+See `pyMBE.pyMBE` for the pyMBE main API.
+
+.. include:: ../README.md
+   :start-after: [comment]: # (usage start)
+   :end-before: [comment]: # (usage stop)
+   :parser: markdown
+
+.. include:: ../README.md
+   :start-after: [comment]: # (references start)
+   :end-before: [comment]: # (references stop)
+   :parser: markdown
+
+"""
+
+from .pyMBE import pymbe_library

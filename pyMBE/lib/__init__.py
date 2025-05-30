@@ -16,3 +16,10 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
+
+"""
+This module contains tools and libraries to pre-process input files,
+post-process and analyze simulation data, and set up ESPResSo systems.
+
+Check the API documentation in the "Submodules" side-panel for details.
+"""
