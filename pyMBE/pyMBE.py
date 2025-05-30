@@ -23,8 +23,9 @@ import numpy as np
 import pandas as pd
 import scipy.constants
 import scipy.optimize
-from lib.lattice import LatticeBuilder, DiamondLattice
+from .lib.lattice import LatticeBuilder, DiamondLattice
 import logging
+import importlib.resources
 
 class pymbe_library():
     """
@@ -81,6 +82,7 @@ class pymbe_library():
                                Kw=Kw)
         self.setup_df()
         self.lattice_builder = None
+        self.root = importlib.resources.files(__package__)
         return
 
     def _check_if_name_is_defined_in_df(self, name):
@@ -2453,20 +2455,6 @@ class pymbe_library():
                                        f"Temperature: {(self.kT/self.kB).to('K'):.5g}"
                                         ])   
         return reduced_units_text
-
-    def get_resource(self, path):
-        '''
-        Locate a file resource of the pyMBE package.
-
-        Args:
-            path(`str`): Relative path to the resource
-
-        Returns:
-            path(`str`): Absolute path to the resource
-
-        '''
-        import os
-        return os.path.join(os.path.dirname(__file__), path)
 
     def get_type_map(self):
         """

@@ -37,8 +37,8 @@ Version requirements are documented in [`requirements.txt`](requirements.txt).
 
 ## Contents
 
+- `pyMBE/`: source code of pyMBE
 - `figs/`: folder with various images used in the tutorials of pyMBE.
-- `lib/`: folder with various libraries.
 - `maintainer/`: folder with various scripts used by the maintainers.
 - `parameters/`: folder with various sets of parameters from previous works.
 - `samples/`: folder with various sample scripts showcasing how to use pyMBE to setup different systems.
@@ -48,7 +48,6 @@ Version requirements are documented in [`requirements.txt`](requirements.txt).
 - `AUTHORS.md`: list of authors and contributors of pyMBE.
 - `CONTRIBUTING.md`: rules on how to contribute to pyMBE.
 - `LICENSE.txt`: license of pyMBE.
-- `pyMBE.py`: source code of pyMBE
 - `requirements.txt`: list of required libraries to use pyMBE.
 
 ## Usage
@@ -125,7 +124,7 @@ $ source pymbe/bin/activate
 (pymbe) $ python3 -c "import espressomd.version; print(espressomd.version.friendly())"
 4.2
 (pymbe) $ python3 -c "import pyMBE; print(pyMBE.__file__)"
-/home/user/Documents/pyMBE/pyMBE.py
+/home/user/Documents/pyMBE/pyMBE/__init__.py
 $ deactivate
 ```
 
