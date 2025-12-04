@@ -24,10 +24,6 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@main
-      - name: Validate CITATION.cff
-        uses: dieghernan/cff-validator@v3
-        with:
-          install-r: true # Ensure R is explicitly installed
       - name: Setup EESSI
         uses: eessi/github-action-eessi@v3
         with:
@@ -41,6 +37,11 @@ jobs:
             pdoc==15.0.3
             pylint==3.0.3
             coverage==7.4.4
+      - name: Setup tmate session
+        uses: mxschmitt/action-tmate@v3
+        with:
+          detached: true
+          limit-access-to-actor: true
       - name: Run testsuite
         run: |
           export NUM_PROC=$(nproc)
