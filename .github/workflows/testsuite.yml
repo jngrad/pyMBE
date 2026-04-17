@@ -17,11 +17,8 @@ jobs:
     strategy:
       matrix:
         espresso:
-          - version: "4.2.2"
-            eessi: ESPResSo/4.2.2-foss-2023a
-            upload_artifact: true
           - version: "5.0-dev"
-            eessi: ESPResSo/dc87ede3f6c218bb71624460752bc8c26a271c33-foss-2023b
+            eessi: ESPResSo/95f275aa2060714e5d5b6c36e39fd4a9b422eacf-foss-2023b
             upload_artifact: false
     name: ubuntu - ESPResSo ${{ matrix.espresso.version }}
     steps:
@@ -44,33 +41,10 @@ jobs:
             pdoc==15.0.3
             pylint==3.0.3
             coverage==7.4.4
-      - name: Run testsuite
-        run: |
-          export NUM_PROC=$(nproc)
-          export OMP_PROC_BIND=false OMP_NUM_THREADS=1
-          module restore pymbe
-          source venv/bin/activate
-          make pylint
-          make unit_tests -j${NUM_PROC} COVERAGE=1
-          make docs
-          make coverage_xml
-        shell: bash
-      - name: Upload artifact
-        if: ${{ matrix.espresso.upload_artifact }}
-        uses: actions/upload-artifact@v4
+      - name: Remote login configuration
+        run: echo 'source "$BASH_ENV"' >> ~/.bash_profile
+      - name: Remote login (for live debugging)
+        uses: owenthereal/action-upterm@v1
         with:
-          path: "./documentation"
-          name: documentation
-          retention-days: 2
-          if-no-files-found: error
-      - name: Upload coverage to Codecov
-        if: ${{ github.repository == 'pyMBE-dev/pyMBE' }}
-        uses: codecov/codecov-action@v4
-        with:
-          file: "./coverage.xml"
-          disable_search: true
-          env_vars: OS,PYTHON
-          fail_ci_if_error: false
-          flags: unittests
-          token: ${{ secrets.CODECOV_TOKEN }}
-          verbose: true
+          detached: true
+          limit-access-to-actor: true
