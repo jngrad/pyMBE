@@ -18,10 +18,10 @@ jobs:
       matrix:
         espresso:
           - version: "4.2.2"
-            eessi: ESPResSo/4.2.2-foss-2023a
+            eessi: ESPResSo/4.2.2-foss-2025a
             upload_artifact: true
           - version: "5.0-dev"
-            eessi: ESPResSo/dc87ede3f6c218bb71624460752bc8c26a271c33-foss-2023b
+            eessi: ESPResSo/95f275aa2060714e5d5b6c36e39fd4a9b422eacf-foss-2025a
             upload_artifact: false
     name: ubuntu - ESPResSo ${{ matrix.espresso.version }}
     steps:
@@ -34,7 +34,7 @@ jobs:
       - name: Setup EESSI
         uses: eessi/github-action-eessi@v3
         with:
-          eessi_stack_version: "2023.06"
+          eessi_stack_version: "2025.06"
       - name: Install dependencies
         uses: ./.github/actions/dependencies
         with:
