@@ -9,7 +9,7 @@ permissions:
 
 jobs:
   ubuntu:
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
     env:
       FI_PROVIDER: "^psm3,psm3;ofi_rxd"
       OMPI_MCA_mtl_ofi_provider_exclude: psm3
@@ -18,23 +18,25 @@ jobs:
       matrix:
         espresso:
           - version: "4.2.2"
-            eessi: ESPResSo/4.2.2-foss-2025a
+            eessi: ESPResSo/4.2.2-foss-2023b
+            eessi_stack_version: "2023.06"
             upload_artifact: true
-          - version: "5.0-dev"
-            eessi: ESPResSo/95f275aa2060714e5d5b6c36e39fd4a9b422eacf-foss-2025a
+          - version: "5.0.1"
+            eessi: ESPResSo/5.0.1-foss-2025a
+            eessi_stack_version: "2025.06"
             upload_artifact: false
     name: ubuntu - ESPResSo ${{ matrix.espresso.version }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@main
       - name: Validate CITATION.cff
-        uses: dieghernan/cff-validator@v3
+        uses: dieghernan/cff-validator@v5
         with:
           install-r: true # Ensure R is explicitly installed
       - name: Setup EESSI
         uses: eessi/github-action-eessi@v3
         with:
-          eessi_stack_version: "2025.06"
+          eessi_stack_version: ${{ matrix.espresso.eessi_stack_version }}
       - name: Install dependencies
         uses: ./.github/actions/dependencies
         with:
@@ -57,7 +59,7 @@ jobs:
         shell: bash
       - name: Upload artifact
         if: ${{ matrix.espresso.upload_artifact }}
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           path: "./documentation"
           name: documentation
@@ -65,7 +67,7 @@ jobs:
           if-no-files-found: error
       - name: Upload coverage to Codecov
         if: ${{ github.repository == 'pyMBE-dev/pyMBE' }}
-        uses: codecov/codecov-action@v4
+        uses: codecov/codecov-action@v7
         with:
           file: "./coverage.xml"
           disable_search: true
