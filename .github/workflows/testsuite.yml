@@ -52,6 +52,7 @@ jobs:
           export OMP_PROC_BIND=false OMP_NUM_THREADS=1
           module restore pymbe
           source venv/bin/activate
+          lmp -h
           make pylint
           make unit_tests -j${NUM_PROC} COVERAGE=1
           make docs
