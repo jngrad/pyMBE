@@ -18,11 +18,11 @@ jobs:
       matrix:
         espresso:
           - version: "4.2.2"
-            eessi: ESPResSo/4.2.2-foss-2023b
+            eessi_modules: ESPResSo/4.2.2-foss-2023b LAMMPS/29Aug2024-foss-2023b-kokkos
             eessi_stack_version: "2023.06"
             upload_artifact: true
           - version: "5.0.1"
-            eessi: ESPResSo/5.0.1-foss-2025a
+            eessi_modules: ESPResSo/5.0.1-foss-2025a LAMMPS/22Jul2025_update4-foss-2025b-kokkos
             eessi_stack_version: "2025.06"
             upload_artifact: false
     name: ubuntu - ESPResSo ${{ matrix.espresso.version }}
@@ -41,7 +41,7 @@ jobs:
         uses: ./.github/actions/dependencies
         with:
           modules: |-
-            ${{ matrix.espresso.eessi }}
+            ${{ matrix.espresso.eessi_modules }}
           extra-python-packages: |-
             pdoc==15.0.3
             pylint==3.0.3
@@ -69,7 +69,7 @@ jobs:
         if: ${{ github.repository == 'pyMBE-dev/pyMBE' }}
         uses: codecov/codecov-action@v7
         with:
-          file: "./coverage.xml"
+          files: "./coverage.xml"
           disable_search: true
           env_vars: OS,PYTHON
           fail_ci_if_error: false
