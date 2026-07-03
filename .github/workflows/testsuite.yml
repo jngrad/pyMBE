@@ -30,17 +30,17 @@ jobs:
           run-id: 28646539066
           github-token: ${{ secrets.GITHUB_TOKEN }}
           name: documentation
-        - name: Inspect artifact contents
-          run: |
-            echo "== size =="
-            du -sh .
-            echo "== symlinks (must be empty) =="
-            find . -type l
-            echo "== top-level =="
-            ls -la
-            echo "== has index.html? =="
-            test -f index.html && echo yes || echo "NO index.html at root"
-            find . -name index.html
+      - name: Inspect artifact contents
+        run: |
+          echo "== size =="
+          du -sh .
+          echo "== symlinks (must be empty) =="
+          find . -type l
+          echo "== top-level =="
+          ls -la
+          echo "== has index.html? =="
+          test -f index.html && echo yes || echo "NO index.html at root"
+          find . -name index.html
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v5
         with:
