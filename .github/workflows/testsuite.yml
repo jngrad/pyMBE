@@ -18,7 +18,7 @@ jobs:
       matrix:
         espresso:
           - version: "4.2.2"
-            eessi_modules: ESPResSo/4.2.2-foss-2023b
+            eessi_modules: ESPResSo/4.2.2-foss-2023b LAMMPS/29Aug2024-foss-2023b-kokkos
             eessi_stack_version: "2023.06"
             upload_artifact: true
           - version: "5.0.1"

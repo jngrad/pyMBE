@@ -493,6 +493,31 @@ class pymbe_library():
         #     espresso_system.part.by_id(pid).remove()
         self.simulation_engine._delete_particles(particle_ids)
 
+    def _is_engine_available(self, simulation_engine):
+        if simulation_engine == EspressoSystemProtocolversion501:
+            import contextlib
+            with contextlib.suppress(ImportError):
+                import espressomd
+                version = espressomd.version.version()
+                return version >= (5, 0, 0) and version < (5, 1, 0)
+            return False
+        if simulation_engine == EspressoSystemProtocolversion422:
+            import contextlib
+            with contextlib.suppress(ImportError):
+                import espressomd
+                version = espressomd.version.friendly()
+                return version == "4.2"
+            return False
+        if simulation_engine == LammpsProtocol:
+            import subprocess
+            try:
+                help_text = subprocess.check_output(["lmp", "-h"])
+            except:
+                return False
+            help_text = "\n".join(help_text.decode().split("\n", 4)[:-1])
+            return "Large-scale Atomic/Molecular Massively Parallel Simulator" in help_text
+        raise NotImplementedError(f'Engine "{name}" is not supported')
+
     def add_instances_to_engine(self):
         self.simulation_engine.add_instances_to_engine()
 
