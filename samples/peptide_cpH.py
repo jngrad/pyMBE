@@ -18,6 +18,7 @@
 
 # Load espresso, pyMBE and other necessary libraries
 import espressomd
+import espressomd.version
 import pandas as pd
 import tqdm
 from espressomd.io.writer import vtf
@@ -190,12 +191,11 @@ if verbose:
     print(pmb.get_reactions_df())
 
 # Setup espresso to track the ionization of the acid/basic groups in peptide
-type_map =pmb.get_type_map()
-types = list (type_map.values())
-espresso_system.setup_type_map( type_list = types)
+if espressomd.version.version() < (5, 1, 0):
+    espresso_system.setup_type_map(type_list = pmb.get_type_map().values())
 
 # Setup the non-interacting type for speeding up the sampling of the reactions
-non_interacting_type = max(type_map.values())+1
+non_interacting_type = max(pmb.get_type_map().values())+1
 cpH.set_non_interacting_type (type=non_interacting_type)
 if verbose:
     print('The non-interacting type is set to ', non_interacting_type)

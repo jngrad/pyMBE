@@ -282,67 +282,6 @@ def define_peptide_AA_residues(sequence,model, pmb):
             pmb.define_residue(name = residue_name, 
                                     central_bead = central_bead,
                                     side_chains = side_chains)
-@deprecated('pmb.simulation_engine.do_reaction')
-def do_reaction(algorithm, steps):
-    """
-    Executes reaction steps using an ESPResSo reaction algorithm with
-    version-compatible calling semantics.
-
-    This function wraps the `reaction` method of an ESPResSo reaction
-    algorithm to account for differences in the method signature between
-    ESPResSo versions.
-
-    Args:
-        algorithm ('espressomd.reaction_methods'):
-            ESPResSo reaction algorithm object (e.g. constant pH,
-            reaction ensemble, or similar).
-        steps ('int'):
-            Number of reaction steps to perform.
-
-    Notes:
-        - In ESPResSo 4.2, the `reaction` method expects the number of steps
-          to be passed as the keyword argument `reaction_steps`.
-        - In newer ESPResSo versions, the keyword argument is `steps`.
-        - This helper function provides a stable interface across ESPResSo
-          versions by dispatching to the appropriate keyword internally.
-    """
-    import espressomd.version
-    if espressomd.version.friendly() == '4.2':
-        algorithm.reaction(reaction_steps=steps)
-    else:
-        algorithm.reaction(steps=steps)
-
-@deprecated('pmb.simulation_engine.get_number_of_particles')
-def get_number_of_particles(espresso_system, ptype):
-    """
-    Returns the number of particles of a given ESPResSo particle type.
-
-    Args:
-        espresso_system ('espressomd.system.System'):
-            ESPResSo system object from which the particle count is queried.
-        ptype ('int'):
-            ESPResSo particle type identifier.
-
-    Returns:
-        ('int'):
-            Number of particles in `espresso_system` with particle type `ptype`.
-
-    Notes:
-        - In ESPResSo 4.2, `number_of_particles` expects the particle type
-          as a positional argument.
-        - In later ESPResSo versions, the particle type must be passed as a
-          keyword argument (`type=ptype`).
-        - This helper function hides these API differences and provides
-          a uniform interface across ESPResSo versions.
-    """
-    import espressomd.version
-    if espressomd.version.friendly() == "4.2":
-        args = (ptype,)
-        kwargs = {}
-    else:
-        args = ()
-        kwargs = {"type": ptype}
-    return espresso_system.number_of_particles(*args, **kwargs)
 
 def get_residues_from_topology_dict(topology_dict, model):
     """
@@ -718,19 +657,13 @@ def setup_electrostatic_interactions(units, espresso_system, kT, c_salt=None, so
 
         if tune_p3m:
             espresso_system.time_step=0.01
-            if espressomd.version.friendly() == "4.2":
-                espresso_system.actors.add(coulomb)
-            else:
-                espresso_system.electrostatics.solver = coulomb
+            espresso_system.electrostatics.solver = coulomb
 
 
             # save the optimal parameters and add them by hand
 
             p3m_params = coulomb.get_params()
-            if espressomd.version.friendly() == "4.2":
-                espresso_system.actors.remove(coulomb)
-            else:
-                espresso_system.electrostatics.solver = None
+            espresso_system.electrostatics.solver = None
             coulomb = espressomd.electrostatics.P3M(prefactor = COULOMB_PREFACTOR.m_as("reduced_length * reduced_energy"),
                                                     accuracy = accuracy,
                                                     mesh = p3m_params['mesh'],
@@ -749,8 +682,5 @@ def setup_electrostatic_interactions(units, espresso_system, kT, c_salt=None, so
         coulomb = espressomd.electrostatics.DH(prefactor = COULOMB_PREFACTOR.m_as("reduced_length * reduced_energy"), 
                                                kappa = (1./KAPPA).to('1/ reduced_length').magnitude, 
                                                r_cut = r_cut)
-    if espressomd.version.friendly() == "4.2":
-        espresso_system.actors.add(coulomb)
-    else:
-        espresso_system.electrostatics.solver = coulomb
+    espresso_system.electrostatics.solver = coulomb
     logging.debug("*** Electrostatics successfully added to the system ***")

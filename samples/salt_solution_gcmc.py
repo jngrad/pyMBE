@@ -19,6 +19,7 @@
 # Load python modules
 from pathlib import Path
 import espressomd
+import espressomd.version
 import numpy as np
 import pandas as pd
 from scipy import interpolate
@@ -28,9 +29,6 @@ import tqdm
 # Import pyMBE
 import pyMBE
 from pyMBE.lib import analysis
-#Import functions from handy_functions script 
-
-from pyMBE.lib.handy_functions import get_number_of_particles
 
 # Create an instance of pyMBE library
 pmb = pyMBE.pymbe_library(seed=42)
@@ -130,11 +128,11 @@ if verbose:
     print("Set up GCMC...")
 
 # Setup espresso to track the ionization of the acid/basic groups in peptide
-type_map = pmb.get_type_map()
-types = list (type_map.values())
-espresso_system.setup_type_map(type_list = types)
+if espressomd.version.version() < (5, 1, 0):
+    espresso_system.setup_type_map(type_list = pmb.get_type_map().values())
 
 # Setup the non-interacting type for speeding up the sampling of the reactions
+type_map = pmb.get_type_map()
 non_interacting_type = max(type_map.values())+1
 RE.set_non_interacting_type(type=non_interacting_type)
 if verbose:
@@ -202,7 +200,7 @@ for i in tqdm.trange(N_production_loops, disable=not verbose):
     time_series["time"].append(espresso_system.time)
 
     # Measure degree of ionization
-    number_of_ion_pairs = get_number_of_particles(espresso_system, type_map[cation_name])
+    number_of_ion_pairs = espresso_system.number_of_particles(type=type_map[cation_name])
     time_series["c_salt"].append((number_of_ion_pairs/(volume * pmb.N_A)).magnitude)
 
 data_path = args.output

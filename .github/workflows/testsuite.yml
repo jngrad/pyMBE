@@ -17,14 +17,10 @@ jobs:
     strategy:
       matrix:
         espresso:
-          - version: "4.2.2"
-            eessi_modules: ESPResSo/4.2.2-foss-2023b
-            eessi_stack_version: "2023.06"
-            upload_artifact: true
           - version: "5.0.1"
             eessi_modules: ESPResSo/5.0.1-foss-2025a
             eessi_stack_version: "2025.06"
-            upload_artifact: false
+            upload_artifact: true
     name: ubuntu - ESPResSo ${{ matrix.espresso.version }}
     steps:
       - name: Checkout repository

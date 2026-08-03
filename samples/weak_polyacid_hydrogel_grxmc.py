@@ -18,6 +18,7 @@
 #
 
 import espressomd
+import espressomd.version
 from espressomd.io.writer import vtf
 from pathlib import Path
 import numpy as np
@@ -235,13 +236,12 @@ grxmc, ionic_strength_res = pmb.setup_grxmc_reactions(pH_res=args.pH_res,
                                                     salt_anion_name=chloride_name, 
                                                     activity_coefficient=activity_coefficient_monovalent_pair)
 
-# Setup espresso to track the ionization of the acid groups
-type_map = pmb.get_type_map()
-types = list(type_map.values())
-espresso_system.setup_type_map(type_list = types)
+# Setup espresso to track the ionization of the acid/basic groups in peptide
+if espressomd.version.version() < (5, 1, 0):
+    espresso_system.setup_type_map(type_list = pmb.get_type_map().values())
 
 # Setup the non-interacting type for speeding up the sampling of the reactions
-non_interacting_type = max(type_map.values())+1
+non_interacting_type = max(pmb.get_type_map().values())+1
 grxmc.set_non_interacting_type (type=non_interacting_type)
 
 for i in tqdm.trange(100):
